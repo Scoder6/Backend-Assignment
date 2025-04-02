@@ -11,6 +11,12 @@ const PORT = process.env.PORT || 5000;
 const MAX_RETRIES = 5;
 let retryCount = 0;
 
+// Define allowed origins
+const allowedOrigins = [
+    'https://frontend-three-zeta-94.vercel.app',
+    'http://localhost:5000' // For local development
+];
+
 // Connect Database with retry logic
 const connectWithRetry = async () => {
     try {
@@ -32,21 +38,13 @@ connectWithRetry();
 
 // CORS Configuration
 const corsOptions = {
-    origin: [
-        'https://frontend-three-zeta-94.vercel.app',
-        'http://localhost:3000' // For local development
-    ],
+    origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
 };
 
-app.use(cors({
-    origin: allowedOrigins,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-    credentials: true
-}));
+app.use(cors(corsOptions));
 
 // Body parsers
 app.use(express.json({ limit: '10mb' }));
