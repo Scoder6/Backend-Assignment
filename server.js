@@ -31,10 +31,15 @@ const connectWithRetry = async () => {
 connectWithRetry();
 
 // CORS Configuration
-const allowedOrigins = [
-    'https://frontend-three-zeta-94.vercel.app',
-    'http://localhost:3000'
-];
+const corsOptions = {
+    origin: [
+        'https://frontend-three-zeta-94.vercel.app',
+        'http://localhost:3000' // For local development
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
 
 app.use(cors({
     origin: allowedOrigins,
